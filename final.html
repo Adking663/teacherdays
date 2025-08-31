@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SPS Coaching Bahuari — Teacher's Day Surprise</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Noto+Sans+Devanagari:wght@400;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --glass: rgba(255,255,255,0.06);
+      --glass-br: 18px;
+      --accent: #ffd54a;
+      --accent2: #6fe8ff;
+      --card-max: 960px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:'Noto Sans Devanagari',sans-serif;background:#030317;color:#fff;overflow:hidden;-webkit-font-smoothing:antialiased}
+    /* Background layers */
+    .bg {
+      position:fixed; inset:0; z-index:-3; overflow:hidden;
+      background: radial-gradient(circle at 30% 20%, #071028 0%, #0b0820 40%, #160121 70%, #09030b 100%);
+    }
+    .haze {
+      position:absolute; inset:-20%;
+      background: conic-gradient(from 90deg, rgba(111,232,255,0.08), rgba(183,33,255,0.06), rgba(255,133,63,0.05), rgba(111,232,255,0.08));
+      filter: blur(60px); transform:scale(1.05);
+      animation: rotateHaze 40s linear infinite; opacity:.95;
+    }
+    @keyframes rotateHaze{to{transform:rotate(360deg) scale(1.05)}}
+
+    .orbitGlow{ position:absolute; left:50%; top:50%; width:560px; height:560px; margin-left:-280px; margin-top:-280px; border-radius:50%; box-shadow: inset 0 0 120px 30px rgba(111,232,255,0.03); animation: spinOr 36s linear infinite; pointer-events:none; }
+    @keyframes spinOr{to{transform:rotate(360deg)}}
+
+    /* particles/stars */
+    .star{ position:absolute; width:2px; height:2px; border-radius:50%; background:#fff; filter:blur(.2px); opacity:.9; animation: floatStar 2.6s linear infinite; }
+    @keyframes floatStar{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+
+    /* Slides */
+    .slide { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity .9s ease, transform .9s ease; transform:scale(.995); }
+    .slide.active{ opacity:1; pointer-events:auto; transform:scale(1); }
+
+    /* Card */
+    .card {
+      width: min(94vw, var(--card-max));
+      background: var(--glass);
+      border-radius: var(--glass-br);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 26px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      text-align:center;
+    }
+    .brand {
+      font-family:'Baloo 2',cursive;
+      color:var(--accent);
+      font-size: clamp(20px, 4.6vw, 40px);
+      margin-bottom:6px;
+      letter-spacing:.4px;
+      text-shadow: 0 0 14px rgba(255,213,74,0.12);
+    }
+    .sub { color:#e9f7ff; opacity:.95; margin-bottom:10px; font-weight:600; }
+    .lead { font-size: clamp(16px, 2.6vw, 20px); line-height:1.6; color:#fff; max-width:64ch; margin: 10px auto; }
+    .foot { margin-top:12px; color:var(--accent2); font-weight:700; }
+
+    /* avatar */
+    .avatar { width:120px; height:120px; border-radius:50%; object-fit:cover; border:3px solid #fff; box-shadow:0 10px 30px rgba(0,0,0,0.5); margin:10px auto 14px; }
+    .name { color:var(--accent); font-weight:800; font-size:clamp(18px,3.4vw,24px); margin-top:6px; }
+    .klass { color:#e9f7ff; opacity:.9; margin-bottom:8px; font-weight:600; }
+
+    /* 3-line reveal */
+    .line { opacity:0; transform: translateY(18px); transition: all .6s cubic-bezier(.2,.9,.3,1); display:block; margin:8px 0; }
+    .line.show { opacity:1; transform: translateY(0); }
+
+    /* responsive grid for three special (in case want side-by-side) */
+    .grid3 { margin-top:14px; display:grid; gap:12px; grid-template-columns:1fr; }
+    @media(min-width:920px){ .grid3 { grid-template-columns: repeat(3, 1fr); } }
+    .mini { background: rgba(255,255,255,0.03); padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,0.04); min-height:180px; display:flex; flex-direction:column; align-items:center; text-align:center; }
+
+    .dateBox{ margin-top:12px; color:var(--accent); font-weight:800; font-size:clamp(16px,2.6vw,20px) }
+
+    /* small devices */
+    @media(max-width:420px){
+      .avatar{ width:96px; height:96px }
+      .lead{ font-size:15px }
+      .brand{ font-size:22px }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background -->
+  <div class="bg">
+    <div class="haze"></div>
+    <div class="orbitGlow"></div>
+  </div>
+
+  <script>
+    // create stars/particles
+    for(let i=0;i<140;i++){
+      const s=document.createElement('div');
+      s.className='star';
+      s.style.left=(Math.random()*100)+'%';
+      s.style.top=(Math.random()*100)+'%';
+      const size = (1 + Math.random()*2);
+      s.style.width = size+'px'; s.style.height = size+'px';
+      s.style.opacity = (0.2 + Math.random()*0.9).toFixed(2);
+      s.style.animationDuration = (1.6 + Math.random()*3)+'s';
+      document.body.appendChild(s);
+    }
+  </script>
+
+  <!-- =========== Slides =========== -->
+
+  <!-- Slide 1: Opening (8s) -->
+  <section class="slide active" id="s1">
+    <div class="card">
+      <div class="brand">शिक्षक दिवस की ढेर सारी शुभकामनाएँ</div>
+      <div class="sub">SPS Coaching Center Bahuari की ओर से समर्पित</div>
+      <p class="lead">आदरणीय सर, आपकी मेहनत, धैर्य और मार्गदर्शन ने हमें वह बनाया जो हम आज हैं। आज हम आपका हृदय से आभार व्यक्त करते हैं।</p>
+      <div class="foot">— आपके विद्यार्थी</div>
+    </div>
+  </section>
+
+  <!-- Slide 2: Ashutosh special (8s, 3-line reveal) -->
+  <section class="slide" id="s2">
+    <div class="card">
+      <div class="brand">विशेष संदेश —</div>
+      <img src="ashutosh.jpg" class="avatar" alt="Ashutosh">
+      <div class="name">Ashutosh Kumar</div>
+      <div class="klass">कक्षा: 10</div>
+
+      <div class="line" id="ash-line-1"><p class="lead">सर, आपने मुश्किलों में भी मुझे विश्वास करना सिखाया।</p></div>
+      <div class="line" id="ash-line-2"><p class="lead">आपकी पढाने की सरल शैली ने सब विषय आसान कर दिए।</p></div>
+      <div class="line" id="ash-line-3"><p class="lead">मेरे हर छोटे-बड़े लक्ष्य में आपका योगदान है — धन्यवाद।</p></div>
+
+      <div class="foot">SPS Coaching Center Bahuari</div>
+    </div>
+  </section>
+
+  <!-- Slide 3: Amit special (8s) -->
+  <section class="slide" id="s3">
+    <div class="card">
+      <div class="brand">विशेष संदेश —</div>
+      <img src="amit.jpg" class="avatar" alt="Amit">
+      <div class="name">Amit Kumar</div>
+      <div class="klass">कक्षा: 10</div>
+
+      <div class="line" id="amit-line-1"><p class="lead">सर, आपकी समझ और धैर्य ने हमें आगे बढ़ना सिखाया।</p></div>
+      <div class="line" id="amit-line-2"><p class="lead">हर प्रश्न को आप इतनी सरलता से हल करते हैं — प्रेरणादायक।</p></div>
+      <div class="line" id="amit-line-3"><p class="lead">आपकी सीख ने मुझे आत्मविश्वासी बनाया — बहुत आभार।</p></div>
+
+      <div class="foot">SPS Coaching Center Bahuari</div>
+    </div>
+  </section>
+
+  <!-- Slide 4: Munna special (8s) -->
+  <section class="slide" id="s4">
+    <div class="card">
+      <div class="brand">विशेष संदेश — </div>
+      <img src="munna.jpg" class="avatar" alt="Munna">
+      <div class="name">Munna Kumar</div>
+      <div class="klass">कक्षा: 10</div>
+
+      <div class="line" id="mun-line-1"><p class="lead">सर, आपने मेहनत की सच्ची कीमत हमें दिखाई।</p></div>
+      <div class="line" id="mun-line-2"><p class="lead">आपने रोज़ थोड़ा बेहतर बनने की प्रेरणा दी।</p></div>
+      <div class="line" id="mun-line-3"><p class="lead">आपका आशीर्वाद हमें लक्ष्य तक पहुंचाएगा — धन्यवाद।</p></div>
+
+      <div class="foot">SPS Coaching Center Bahuari</div>
+    </div>
+  </section>
+
+  <!-- Slides 5-10: Six wishes (each 3 lines) -->
+  <section class="slide" id="s5">
+    <div class="card">
+      <div class="brand">शुभकामना 1</div>
+      <p class="lead">आपके शब्द प्रेरणा बनते हैं, आपके सिखाए हुए मार्ग हमारी राह बनते हैं।<br>आपके साथ हम हर चुनौती से लड़ते हैं।<br>धन्यवाद सर।</p>
+      <div class="foot">— SPS Coaching</div>
+    </div>
+  </section>
+
+  <section class="slide" id="s6">
+    <div class="card">
+      <div class="brand">शुभकामना 2</div>
+      <p class="lead">आपने हमें मेहनत का अर्थ सिखाया, धैर्य की हिम्मत दी।<br>आपकी सीखें जीवनभर साथ रहेंगी।<br>हमारा सम्मान सदैव आपके साथ है।</p>
+      <div class="foot">— SPS Coaching</div>
+    </div>
+  </section>
+
+  <section class="slide" id="s7">
+    <div class="card">
+      <div class="brand">शुभकामना 3</div>
+      <p class="lead">गुरु का आशीर्वाद हर कदम पर साथ रहे।<br>आपने हमें सपने देखना और पूरा करना सिखाया।<br>हार्दिक धन्यवाद सर।</p>
+      <div class="foot">— SPS Coaching</div>
+    </div>
+  </section>
+
+  <section class="slide" id="s8">
+    <div class="card">
+      <div class="brand">शुभकामना 4</div>
+      <p class="lead">आपकी शिक्षा ने हमारे मार्ग को सरल किया।<br>आपके मार्गदर्शन से हम मज़बूत बने।<br>आपके आशीर्वाद के लिए आभारी।</p>
+      <div class="foot">— SPS Coaching</div>
+    </div>
+  </section>
+
+  <section class="slide" id="s9">
+    <div class="card">
+      <div class="brand">शुभकामना 5</div>
+      <p class="lead">आपके शब्दों में जादू है — हमें आगे बढ़ने की ताकत मिलती है।<br>आपके साथ सीखना सम्मान की बात है।<br>शुभकामनाएँ सर।</p>
+      <div class="foot">— SPS Coaching</div>
+    </div>
+  </section>
+
+  <section class="slide" id="s10">
+    <div class="card">
+      <div class="brand">शुभकामना 6</div>
+      <p class="lead">आपने न सिर्फ़ किताबें पढ़ाईं, बल्कि जीवन जीना सिखाया।<br>आपके आशीर्वाद से हम हर बाधा पार करेंगे।<br>धन्यवाद और शुभकामनाएँ।</p>
+      <div class="foot">— SPS Coaching </div>
+    </div>
+  </section>
+
+  <!-- Final Slide: Subhash Sir (stops here) -->
+  <section class="slide" id="s11">
+    <div class="card">
+      <div class="brand">Subhash Sir</div>
+      <img src="subhash.jpg" class="avatar" alt="Subhash Sir">
+      <p class="lead">SPS Coaching Center Bahuari की ओर से हार्दिक नमन।<br>आपके मार्गदर्शन के लिए धन्यवाद।</p>
+      <div class="dateBox">5 सितम्बर 2025</div>
+      <div class="foot">— Ashutosh • Amit • Munna</div>
+    </div>
+  </section>
+
+  <!-- ========== Script: slideshow + line animations ========== -->
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    // durations in ms for each slide (s1..s11)
+    // first opening 8000, specials s2,s3,s4 = 8000 each, wishes s5-s10 = 7000 each, final s11 = stop
+    const durations = [
+      8000, 8000, 8000, 8000,
+      7000, 7000, 7000, 7000, 7000, 7000,
+      99999999
+    ];
+
+    let idx = 0;
+    function show(i){
+      slides.forEach((s,si)=> s.classList.toggle('active', si===i));
+    }
+
+    function animateLines(i){
+      // s2 (index 1) Ashutosh, ids ash-line-1..3 earlier; here IDs are ash-line-1? we used different ids: ash-line? We used ash-line-? -> we used ash-line? Actually in code IDs are ash-line-1 etc. Wait our code used ash-line-1? Check above: IDs are ash-line-1? No we used ash-line-1? Actually we used ash-line-1? Looking back, we used ash-line-1? In current code, we used ids 'ash-line-1'? I used 'ash-line-1' in previous version but here used 'ash-line-1'? To be safe, select by parent slide query for .line children.
+    // We'll implement generic: find .line inside current slide and reveal sequentially.
+    const slide = slides[i];
+    const lines = Array.from(slide.querySelectorAll('.line'));
+    if(lines.length){
+      // hide all first
+      lines.forEach(l=> l.classList.remove('show'));
+      // reveal sequentially
+      lines.forEach((l,k)=>{
+        setTimeout(()=> l.classList.add('show'), 700 + k*2200);
+      });
+    }
+  }
+
+    function run(){
+      show(idx);
+      animateLines(idx);
+      if(idx < slides.length - 1){
+        setTimeout(()=>{
+          idx++;
+          run();
+        }, durations[idx]);
+      } else {
+        // stop at last slide
+        show(idx);
+      }
+    }
+
+    // small delay for first render
+    setTimeout(run, 400);
+  </script>
+</body>
+</html>
